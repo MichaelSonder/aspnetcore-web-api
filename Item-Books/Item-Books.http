@@ -1,0 +1,6 @@
+@Item_Books_HostAddress = http://localhost:5248
+
+GET {{Item_Books_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
