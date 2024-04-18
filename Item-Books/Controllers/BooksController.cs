@@ -17,6 +17,13 @@ namespace Item_Books.Controllers
             _booksService = booksService;
         }
 
+        [HttpPost("add-book")]
+        public async Task<ActionResult> AddBook([FromBody] BookVM book)
+        {
+            await _booksService.AddBook(book);
+            return Ok();
+        }
+
         [HttpGet("get-all-books")]
         public async Task<ActionResult<List<Book>>> GetAllBooks()
         {
@@ -36,11 +43,26 @@ namespace Item_Books.Controllers
             return Ok(book);
         }
 
-            [HttpPost("add-book")]
-        public IActionResult AddBook([FromBody] BookVM book)
+        [HttpPut("update-book-by-id/{id}")]
+        public async Task<ActionResult> UpdateBookById(int id, [FromBody] BookVM book)
         {
-            _booksService.AddBook(book);
+            var updatedBook = await _booksService.UpdateBookById(id, book);
+
+            if (updatedBook == null)
+            {
+                return NotFound(new { message = "Book not found" });
+            }
+
+            return Ok(updatedBook);
+        }
+
+        [HttpDelete("delete-book-by-id/{id}")]
+        public async Task<ActionResult> DeleteBookById(int id)
+        {
+            await _booksService.DeleteBookById(id);
             return Ok();
         }
+
+
     }
 }
