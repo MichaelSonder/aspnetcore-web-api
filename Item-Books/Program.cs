@@ -1,4 +1,5 @@
 using Item_Books.Data;
+using Item_Books.Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,9 @@ var connectionString = settings.GetConnectionString("DefaultConnectionString");
 
 // AppDbContext added
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
+//Configure the Services
+builder.Services.AddTransient<BooksService>();
 
 var app = builder.Build();
 
